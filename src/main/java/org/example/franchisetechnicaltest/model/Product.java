@@ -5,10 +5,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -21,9 +21,8 @@ public class Product implements Serializable {
 
     private Long stock;
 
-    @ManyToOne
-    @JoinColumn(name = "branch_id")
-    private Branch branch;
+    @ManyToMany(mappedBy = "products")
+    private List<Branch> branches;
 
     public Long getId() {
         return id;
@@ -49,12 +48,12 @@ public class Product implements Serializable {
         this.stock = stock;
     }
 
-    public Branch getBranch() {
-        return branch;
+    public List<Branch> getBranches() {
+        return branches;
     }
 
-    public void setBranch(Branch branch) {
-        this.branch = branch;
+    public void setBranches(List<Branch> branches) {
+        this.branches = branches;
     }
 
     private static final long serialVersionUID = 1L;

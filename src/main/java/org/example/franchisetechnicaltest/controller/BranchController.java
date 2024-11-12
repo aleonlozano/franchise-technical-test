@@ -2,6 +2,7 @@ package org.example.franchisetechnicaltest.controller;
 
 import org.example.franchisetechnicaltest.dto.ProductDTO;
 import org.example.franchisetechnicaltest.service.BranchService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
@@ -21,5 +22,13 @@ public class BranchController {
             @PathVariable Long branchId,
             @Valid @RequestBody ProductDTO productDTO) {
         return branchService.addProductToBranch(branchId, productDTO);
+    }
+
+    @DeleteMapping("{branchId}/products/{productId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void removeProductFromBranch(
+            @PathVariable Long branchId,
+            @PathVariable Long productId) {
+        branchService.removeProductFromBranch(branchId, productId);
     }
 }

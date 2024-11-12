@@ -6,10 +6,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinTable;
 
 import java.io.Serializable;
 import java.util.List;
@@ -27,7 +26,12 @@ public class Branch implements Serializable {
     @JoinColumn(name = "franchise_id")
     private Franchise franchise;
 
-    @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany
+    @JoinTable(
+            name = "branch_product",
+            joinColumns = @JoinColumn(name = "branch_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
     private List<Product> products;
 
     public Long getId() {
