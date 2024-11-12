@@ -3,6 +3,7 @@ package org.example.franchisetechnicaltest.service;
 import jakarta.transaction.Transactional;
 import org.example.franchisetechnicaltest.dto.BranchDTO;
 import org.example.franchisetechnicaltest.dto.FranchiseDTO;
+import org.example.franchisetechnicaltest.exception.ExistingFranchiseException;
 import org.example.franchisetechnicaltest.exception.NotFoundException;
 import org.example.franchisetechnicaltest.model.Branch;
 import org.example.franchisetechnicaltest.model.Franchise;
@@ -23,6 +24,11 @@ public class FranchiseService {
     private BranchRepository branchRepository;
 
     public FranchiseDTO saveFranchise(FranchiseDTO franchiseDTO) {
+        franchiseRepository.findByName(franchiseDTO.getName())
+                .ifPresent(existingFranchise -> {
+                    throw new ExistingFranchiseException(franchiseDTO.getName());
+                });
+
         Franchise franchise = convertToEntity(franchiseDTO);
         return convertToDto(franchiseRepository.save(franchise));
     }
