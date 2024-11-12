@@ -36,8 +36,9 @@ public class FranchiseService {
                     throw new ExistingFranchiseException(franchiseDTO.getName());
                 });
 
-        Franchise franchise = convertToEntity(franchiseDTO);
-        return convertToDto(franchiseRepository.save(franchise));
+        Franchise franchise = franchiseRepository.save(convertToEntity(franchiseDTO));
+
+        return convertToDto(franchise);
     }
 
     @Transactional
@@ -78,34 +79,23 @@ public class FranchiseService {
     }
 
     private FranchiseDTO convertToDto(Franchise franchise) {
+        if (franchise == null) {
+            return null;
+        }
+
         FranchiseDTO franchiseDto = new FranchiseDTO();
         franchiseDto.setId(franchise.getId());
         franchiseDto.setName(franchise.getName());
-        if (franchise.getBranches() != null) {
-            franchiseDto.setBranches(franchise.getBranches().stream()
-                    .map(branch -> {
-                        BranchDTO branchDTO = new BranchDTO();
-                        branchDTO.setId(branch.getId());
-                        branchDTO.setName(branch.getName());
-                        branchDTO.setFranchiseId(franchise.getId());
-                        return branchDTO;
-                    }).collect(Collectors.toList()));
-        }
         return franchiseDto;
     }
 
     private Franchise convertToEntity(FranchiseDTO franchiseDto) {
+        if (franchiseDto == null) {
+            return null;
+        }
+
         Franchise franchise = new Franchise();
         franchise.setName(franchiseDto.getName());
-        if (franchiseDto.getBranches() != null) {
-            franchise.setBranches(franchiseDto.getBranches().stream()
-                    .map(branchDTO -> {
-                        Branch branch = new Branch();
-                        branch.setName(branchDTO.getName());
-                        branch.setFranchise(franchise);
-                        return branch;
-                    }).collect(Collectors.toList()));
-        }
         return franchise;
     }
 }
