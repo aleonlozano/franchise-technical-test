@@ -27,13 +27,32 @@ public class BranchService {
         Product product = new Product();
         product.setName(productDTO.getName());
         product.setStock(productDTO.getStock());
-        product.setBranch(branch);
 
         Product savedProduct = productRepository.save(product);
+
+        branch.getProducts().add(savedProduct);
+
+        branchRepository.save(branch);
 
         productDTO.setId(savedProduct.getId());
         productDTO.setBranchId(branchId);
 
         return productDTO;
+    }
+
+    @Transactional
+    public void removeProductFromBranch(Long branchId, Long productId) {
+        Branch branch = branchRepository.findById(branchId)
+                .orElseThrow(() -> new NotFoundException("Branch",  "id", branchId));
+
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new NotFoundException("Product",  "id", productId));
+
+        if (branch.getProducts().contains(product)) {
+            branch.getProducts().remove(product);
+            branchRepository.save(branch);
+        } else {
+            throw new RuntimeException("Product is not associated with the specified branch");
+        }
     }
 }
