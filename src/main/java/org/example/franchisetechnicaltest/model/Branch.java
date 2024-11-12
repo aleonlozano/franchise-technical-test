@@ -1,5 +1,6 @@
 package org.example.franchisetechnicaltest.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,6 +33,7 @@ public class Branch implements Serializable {
             joinColumns = @JoinColumn(name = "branch_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
+    @JsonManagedReference
     private List<Product> products;
 
     public Long getId() {
