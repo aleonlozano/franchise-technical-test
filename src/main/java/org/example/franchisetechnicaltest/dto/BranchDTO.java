@@ -3,15 +3,13 @@ package org.example.franchisetechnicaltest.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-import java.util.List;
-
 public class BranchDTO {
     private Long id;
     @NotBlank(message = "Name is mandatory")
     @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")
     private String name;
     private Long franchiseId;
-    private List<ProductDTO> products;
+    private String franchiseName;
 
     public Long getId() {
         return id;
@@ -21,11 +19,11 @@ public class BranchDTO {
         this.id = id;
     }
 
-    public String getName() {
+    public @NotBlank(message = "Name is mandatory") @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters") String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(@NotBlank(message = "Name is mandatory") @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters") String name) {
         this.name = name;
     }
 
@@ -37,11 +35,11 @@ public class BranchDTO {
         this.franchiseId = franchiseId;
     }
 
-    public List<ProductDTO> getProducts() {
-        return products;
+    public String getFranchiseName() {
+        return franchiseName;
     }
 
-    public void setProducts(List<ProductDTO> products) {
-        this.products = products;
+    public void setFranchiseName(String franchiseName) {
+        this.franchiseName = franchiseName;
     }
 }
