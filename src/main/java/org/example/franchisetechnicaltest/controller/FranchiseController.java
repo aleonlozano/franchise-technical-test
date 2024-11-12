@@ -3,10 +3,13 @@ package org.example.franchisetechnicaltest.controller;
 import jakarta.validation.Valid;
 import org.example.franchisetechnicaltest.dto.BranchDTO;
 import org.example.franchisetechnicaltest.dto.FranchiseDTO;
+import org.example.franchisetechnicaltest.dto.ProductStockDTO;
 import org.example.franchisetechnicaltest.service.FranchiseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/franchises")
@@ -30,5 +33,11 @@ public class FranchiseController {
             @PathVariable Long franchiseId,
             @Valid @RequestBody BranchDTO branchDTO) {
         return franchiseService.addBranchToFranchise(franchiseId, branchDTO);
+    }
+
+    @GetMapping("/{franchiseId}/top-stock-products")
+    public List<ProductStockDTO> getTopStockProductByBranch(
+            @PathVariable Long franchiseId) {
+        return franchiseService.getTopStockProductByBranch(franchiseId);
     }
 }
