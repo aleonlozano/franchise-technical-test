@@ -1,0 +1,171 @@
+{
+	"info": {
+		"_postman_id": "518d4e1d-305b-429d-bd95-de33d40f91b7",
+		"name": "Franchise technical test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39632142"
+	},
+	"item": [
+		{
+			"name": "Add New Franchise",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"KFC\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3306/api/franchises",
+					"host": [
+						"localhost"
+					],
+					"port": "3306",
+					"path": [
+						"api",
+						"franchises"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Branch to franchise",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Barzal\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3306/api/franchises/12/branches",
+					"host": [
+						"localhost"
+					],
+					"port": "3306",
+					"path": [
+						"api",
+						"franchises",
+						"12",
+						"branches"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add product to branch",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Sandwich de pollo\",\r\n  \"stock\": 200\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3306/api/branches/4/products",
+					"host": [
+						"localhost"
+					],
+					"port": "3306",
+					"path": [
+						"api",
+						"branches",
+						"4",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove product from branch",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:3306/api/branches/4/products/2",
+					"host": [
+						"localhost"
+					],
+					"port": "3306",
+					"path": [
+						"api",
+						"branches",
+						"4",
+						"products",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Top stock products per franchise",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3306/api/franchises/16/top-stock-products",
+					"host": [
+						"localhost"
+					],
+					"port": "3306",
+					"path": [
+						"api",
+						"franchises",
+						"16",
+						"top-stock-products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modify stock product",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"stock\": 100\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3306/api/products/11/stock",
+					"host": [
+						"localhost"
+					],
+					"port": "3306",
+					"path": [
+						"api",
+						"products",
+						"11",
+						"stock"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
