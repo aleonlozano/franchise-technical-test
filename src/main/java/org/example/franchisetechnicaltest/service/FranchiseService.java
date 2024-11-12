@@ -3,15 +3,21 @@ package org.example.franchisetechnicaltest.service;
 import jakarta.transaction.Transactional;
 import org.example.franchisetechnicaltest.dto.BranchDTO;
 import org.example.franchisetechnicaltest.dto.FranchiseDTO;
+import org.example.franchisetechnicaltest.dto.ProductStockDTO;
 import org.example.franchisetechnicaltest.exception.ExistingFranchiseException;
 import org.example.franchisetechnicaltest.exception.NotFoundException;
 import org.example.franchisetechnicaltest.model.Branch;
 import org.example.franchisetechnicaltest.model.Franchise;
+import org.example.franchisetechnicaltest.model.Product;
 import org.example.franchisetechnicaltest.repository.BranchRepository;
 import org.example.franchisetechnicaltest.repository.FranchiseRepository;
+import org.example.franchisetechnicaltest.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,6 +28,9 @@ public class FranchiseService {
 
     @Autowired
     private BranchRepository branchRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
 
     public FranchiseDTO saveFranchise(FranchiseDTO franchiseDTO) {
         franchiseRepository.findByName(franchiseDTO.getName())
@@ -48,6 +57,21 @@ public class FranchiseService {
         branchDTO.setFranchiseId(franchiseId);
 
         return branchDTO;
+    }
+
+    public List<ProductStockDTO> getTopStockProductByBranch(Long franchiseId) {
+        if (!franchiseRepository.existsById(franchiseId)) {
+            throw new NotFoundException("Franchise", "id", franchiseId);
+        }
+
+        List<Product> topStockProducts = productRepository.findTopStockProductsByFranchise(franchiseId);
+
+        return topStockProducts.stream()
+                .map(product -> new ProductStockDTO(
+                        product.getBranches().stream().filter(b -> b.getFranchise().getId().equals(franchiseId)).findFirst().get().getName(),
+                        product.getName(),
+                        product.getStock()))
+                .collect(Collectors.toList());
     }
 
     private FranchiseDTO convertToDto(Franchise franchise) {
