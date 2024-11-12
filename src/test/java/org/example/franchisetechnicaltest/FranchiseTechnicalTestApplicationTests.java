@@ -2,12 +2,14 @@ package org.example.franchisetechnicaltest;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
-class FranchiseTechnicalTestApplicationTests {
+@ActiveProfiles("test")
+public class FranchiseTechnicalTestApplicationTests {
 
     @Test
     void contextLoads() {
     }
-
 }
+
