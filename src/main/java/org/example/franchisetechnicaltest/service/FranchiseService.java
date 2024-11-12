@@ -1,9 +1,12 @@
 package org.example.franchisetechnicaltest.service;
 
+import jakarta.transaction.Transactional;
 import org.example.franchisetechnicaltest.dto.BranchDTO;
 import org.example.franchisetechnicaltest.dto.FranchiseDTO;
+import org.example.franchisetechnicaltest.exception.NotFoundException;
 import org.example.franchisetechnicaltest.model.Branch;
 import org.example.franchisetechnicaltest.model.Franchise;
+import org.example.franchisetechnicaltest.repository.BranchRepository;
 import org.example.franchisetechnicaltest.repository.FranchiseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,9 +19,29 @@ public class FranchiseService {
     @Autowired
     private FranchiseRepository franchiseRepository;
 
+    @Autowired
+    private BranchRepository branchRepository;
+
     public FranchiseDTO saveFranchise(FranchiseDTO franchiseDTO) {
         Franchise franchise = convertToEntity(franchiseDTO);
         return convertToDto(franchiseRepository.save(franchise));
+    }
+
+    @Transactional
+    public BranchDTO addBranchToFranchise(Long franchiseId, BranchDTO branchDTO) {
+        Franchise franchise = franchiseRepository.findById(franchiseId)
+                .orElseThrow(() -> new NotFoundException("Franchise", "id", franchiseId));
+
+        Branch branch = new Branch();
+        branch.setName(branchDTO.getName());
+        branch.setFranchise(franchise);
+
+        Branch savedBranch = branchRepository.save(branch);
+
+        branchDTO.setId(savedBranch.getId());
+        branchDTO.setFranchiseId(franchiseId);
+
+        return branchDTO;
     }
 
     private FranchiseDTO convertToDto(Franchise franchise) {

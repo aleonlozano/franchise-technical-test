@@ -1,6 +1,7 @@
 package org.example.franchisetechnicaltest.controller;
 
 import jakarta.validation.Valid;
+import org.example.franchisetechnicaltest.dto.BranchDTO;
 import org.example.franchisetechnicaltest.dto.FranchiseDTO;
 import org.example.franchisetechnicaltest.service.FranchiseService;
 import org.springframework.http.HttpStatus;
@@ -22,5 +23,12 @@ public class FranchiseController {
     @ResponseStatus(HttpStatus.CREATED)
     public FranchiseDTO addFranchise(@Valid @RequestBody FranchiseDTO franchiseDTO) {
         return franchiseService.saveFranchise(franchiseDTO);
+    }
+
+    @PostMapping("/{franchiseId}/branches")
+    public BranchDTO addBranchToFranchise(
+            @PathVariable Long franchiseId,
+            @Valid @RequestBody BranchDTO branchDTO) {
+        return franchiseService.addBranchToFranchise(franchiseId, branchDTO);
     }
 }

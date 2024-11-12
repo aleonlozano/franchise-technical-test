@@ -1,9 +1,14 @@
 package org.example.franchisetechnicaltest.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 import java.util.List;
 
 public class BranchDTO {
     private Long id;
+    @NotBlank(message = "Name is mandatory")
+    @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")
     private String name;
     private Long franchiseId;
     private List<ProductDTO> products;
