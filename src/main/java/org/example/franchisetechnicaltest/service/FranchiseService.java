@@ -15,9 +15,7 @@ import org.example.franchisetechnicaltest.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -68,10 +66,15 @@ public class FranchiseService {
 
         return topStockProducts.stream()
                 .map(product -> new ProductStockDTO(
-                        product.getBranches().stream().filter(b -> b.getFranchise().getId().equals(franchiseId)).findFirst().get().getName(),
+                        product.getBranches().stream()
+                                .filter(b -> b.getFranchise().getId().equals(franchiseId))
+                                .findFirst()
+                                .orElseThrow(() -> new RuntimeException("Branch not found for franchise"))
+                                .getName(),
                         product.getName(),
                         product.getStock()))
                 .collect(Collectors.toList());
+
     }
 
     private FranchiseDTO convertToDto(Franchise franchise) {
