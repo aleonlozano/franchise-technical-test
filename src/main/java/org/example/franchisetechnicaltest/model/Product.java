@@ -1,5 +1,6 @@
 package org.example.franchisetechnicaltest.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,6 +23,7 @@ public class Product implements Serializable {
     private Long stock;
 
     @ManyToMany(mappedBy = "products")
+    @JsonBackReference
     private List<Branch> branches;
 
     public Long getId() {
