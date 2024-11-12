@@ -12,6 +12,7 @@ public class ProductDTO {
     @Min(value = 0, message = "Stock cannot be negative")
     private Long stock;
     private Long branchId;
+    private String branchName;
 
     public Long getId() {
         return id;
@@ -21,19 +22,19 @@ public class ProductDTO {
         this.id = id;
     }
 
-    public String getName() {
+    public @NotBlank(message = "Product name is mandatory") String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(@NotBlank(message = "Product name is mandatory") String name) {
         this.name = name;
     }
 
-    public Long getStock() {
+    public @NotNull(message = "Stock is mandatory") @Min(value = 0, message = "Stock cannot be negative") Long getStock() {
         return stock;
     }
 
-    public void setStock(Long stock) {
+    public void setStock(@NotNull(message = "Stock is mandatory") @Min(value = 0, message = "Stock cannot be negative") Long stock) {
         this.stock = stock;
     }
 
@@ -43,6 +44,14 @@ public class ProductDTO {
 
     public void setBranchId(Long branchId) {
         this.branchId = branchId;
+    }
+
+    public String getBranchName() {
+        return branchName;
+    }
+
+    public void setBranchName(String branchName) {
+        this.branchName = branchName;
     }
 }
 

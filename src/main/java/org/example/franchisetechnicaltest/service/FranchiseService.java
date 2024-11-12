@@ -54,6 +54,7 @@ public class FranchiseService {
 
         branchDTO.setId(savedBranch.getId());
         branchDTO.setFranchiseId(franchiseId);
+        branchDTO.setFranchiseName(franchise.getName());
 
         return branchDTO;
     }

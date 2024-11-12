@@ -36,6 +36,7 @@ public class BranchService {
 
         productDTO.setId(savedProduct.getId());
         productDTO.setBranchId(branchId);
+        productDTO.setBranchName(branch.getName());
 
         return productDTO;
     }
