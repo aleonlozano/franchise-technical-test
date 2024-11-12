@@ -1,9 +1,16 @@
 package org.example.franchisetechnicaltest.dto;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class ProductDTO {
     private Long id;
+    @NotBlank(message = "Product name is mandatory")
     private String name;
-    private int stock;
+    @NotNull(message = "Stock is mandatory")
+    @Min(value = 0, message = "Stock cannot be negative")
+    private Long stock;
     private Long branchId;
 
     public Long getId() {
@@ -22,11 +29,11 @@ public class ProductDTO {
         this.name = name;
     }
 
-    public int getStock() {
+    public Long getStock() {
         return stock;
     }
 
-    public void setStock(int stock) {
+    public void setStock(Long stock) {
         this.stock = stock;
     }
 
@@ -38,3 +45,4 @@ public class ProductDTO {
         this.branchId = branchId;
     }
 }
+
