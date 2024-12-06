@@ -11,8 +11,7 @@ pipeline {
         }
         stage('Dependency Check') {
             steps {
-                sh 'dependency-check --project "ProjectName" --out dependency-check-output --scan .'
-                dependencyCheckPublisher pattern: 'dependency-check-output/dependency-check-report.xml'
+                bat 'dependency-check.bat --project "ProjectName" --out dependency-check-output --scan .'
             }
         }
     }
