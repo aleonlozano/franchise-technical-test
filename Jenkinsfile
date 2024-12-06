@@ -16,7 +16,7 @@ pipeline {
                     --project "ProjectName" ^
                     --out dependency-check-output ^
                     --scan . ^
-                    --exclude-test-scope
+                    --exclude "**/test/**"
                 '''
             }
         }
