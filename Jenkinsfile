@@ -11,7 +11,13 @@ pipeline {
         }
         stage('Dependency Check') {
             steps {
-                bat 'C:\\dependency-check\\bin\\dependency-check.bat --project "ProjectName" --out dependency-check-output --scan .'
+                bat '''
+                    C:\\dependency-check\\bin\\dependency-check.bat ^
+                    --project "ProjectName" ^
+                    --out dependency-check-output ^
+                    --scan . ^
+                    --exclude-test-scope
+                '''
             }
         }
     }
