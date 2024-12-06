@@ -11,7 +11,7 @@ pipeline {
         }
         stage('Dependency Check') {
             steps {
-                bat 'dependency-check.bat --project "ProjectName" --out dependency-check-output --scan .'
+                bat 'C:\\dependency-check\\bin\\dependency-check.bat --project "ProjectName" --out dependency-check-output --scan .'
             }
         }
     }
