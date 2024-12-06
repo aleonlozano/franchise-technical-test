@@ -11,7 +11,8 @@ pipeline {
         }
         stage('Dependency Check') {
             steps {
-                dependencyCheckPublisher datadir: 'dependency-check-data', outdir: 'dependency-check-output'
+                sh 'dependency-check --project "ProjectName" --out dependency-check-output --scan .'
+                dependencyCheckPublisher pattern: 'dependency-check-output/dependency-check-report.xml'
             }
         }
     }
