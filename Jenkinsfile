@@ -11,7 +11,7 @@ pipeline {
         }
         stage('Dependency Check') {
             steps {
-                dependencyCheckAnalyzer datadir: 'dependency-check-data', outdir: 'dependency-check-output'
+                dependencyCheckPublisher datadir: 'dependency-check-data', outdir: 'dependency-check-output'
             }
         }
     }
